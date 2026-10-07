@@ -3,11 +3,62 @@
 @tailwind utilities;
 
 :root {
-  --ink: #F6F4F0;   /* paper */
-  --steel: #1F6FA8;
-  --bone: #0F1319;  /* type  */
+  /* Paper — the reading sections */
+  --c-ink:       246 244 240;
+  --c-ink-800:   239 236 230;
+  --c-ink-700:   231 227 219;
+  --c-ink-600:   219 214 204;
+  --c-ink-500:   201 195 183;
+
+  --c-bone:      15 19 25;
+  --c-bone-600:  69 76 86;
+  --c-bone-500:  107 114 123;
+  --c-bone-400:  148 154 162;
+
+  --c-steel:     31 111 168;
+  --c-steel-400: 28 99 150;
+  --c-steel-300: 23 85 127;
+  --c-steel-600: 22 75 112;
+  --c-steel-700: 203 224 240;
+
+  --c-sand:      154 123 24;
+
+  --ink: rgb(var(--c-ink));
+  --steel: rgb(var(--c-steel));
+  --bone: rgb(var(--c-bone));
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* Near-black cinematic sections. Same components, inverted palette — this is
+   the contrast that makes the page feel like film rather than a brochure. */
+.on-dark {
+  --c-ink:       7 9 12;
+  --c-ink-800:   11 14 19;
+  --c-ink-700:   17 21 28;
+  --c-ink-600:   24 29 38;
+  --c-ink-500:   34 41 53;
+
+  --c-bone:      237 234 228;
+  --c-bone-600:  184 180 172;
+  --c-bone-500:  138 133 124;
+  --c-bone-400:  94 90 83;
+
+  --c-steel:     46 127 184;
+  --c-steel-400: 79 163 220;
+  --c-steel-300: 124 194 238;
+  --c-steel-600: 31 95 142;
+  --c-steel-700: 22 69 100;
+
+  --c-sand:      201 162 39;
+
+  --ink: rgb(var(--c-ink));
+  --steel: rgb(var(--c-steel));
+  --bone: rgb(var(--c-bone));
+}
+
+/* Deliberately no background-color or color here: the scope only redefines
+   variables. Painting on it would turn every transparent full-screen overlay
+   that carries the class — the menu, for one — into an opaque sheet. */
 
 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
@@ -24,8 +75,8 @@ body {
 
 /* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar { width: 7px; }
-::-webkit-scrollbar-track { background: #EFECE6; }
-::-webkit-scrollbar-thumb { background: #C9C3B7; border-radius: 99px; }
+::-webkit-scrollbar-track { background: rgb(var(--c-ink-800)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--c-ink-500)); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--steel); }
 
 /* ---------- Typography primitives ---------- */
@@ -113,8 +164,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   position: fixed; top: 0; left: 0; z-index: 90;
   pointer-events: none; border-radius: 99px;
 }
-.cursor-dot  { width: 6px;  height: 6px;  background: #0F1319; }
-.cursor-ring { width: 40px; height: 40px; border: 1px solid rgba(15,19,25,0.45); }
+.cursor-dot  { width: 6px;  height: 6px;  background: rgb(var(--c-bone)); }
+.cursor-ring { width: 40px; height: 40px; border: 1px solid rgb(var(--c-bone) / 0.45); }
 @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
 
 /* ---------- Marquee ---------- */
@@ -125,10 +176,10 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 }
 
 /* ---------- Hairlines ---------- */
-.hair   { border-color: rgba(15,19,25,0.13); }
-.hair-t { border-top: 1px solid rgba(15,19,25,0.13); }
-.hair-b { border-bottom: 1px solid rgba(15,19,25,0.13); }
-.hair-l { border-left: 1px solid rgba(15,19,25,0.13); }
+.hair   { border-color: rgb(var(--c-bone) / 0.14); }
+.hair-t { border-top: 1px solid rgb(var(--c-bone) / 0.14); }
+.hair-b { border-bottom: 1px solid rgb(var(--c-bone) / 0.14); }
+.hair-l { border-left: 1px solid rgb(var(--c-bone) / 0.14); }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -147,9 +198,9 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 }
 .btn:hover::before { transform: translateY(0); }
 
-.btn-solid  { background: var(--bone); color: #F6F4F0; }
+.btn-solid  { background: rgb(var(--c-bone)); color: rgb(var(--c-ink)); }
 .btn-solid:hover  { color: #fff; }
-.btn-ghost  { border: 1px solid rgba(15,19,25,0.26); color: var(--bone); }
+.btn-ghost  { border: 1px solid rgb(var(--c-bone) / 0.26); color: var(--bone); }
 .btn-ghost:hover  { color: #fff; border-color: var(--steel); }
 
 /* ---------- Link underline sweep ---------- */
@@ -188,13 +239,13 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 .leak-a {
   top: -10%; left: -8%;
   width: 46vw; height: 46vw;
-  background: radial-gradient(circle, rgba(31,111,168,0.13) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56,132,190,0.20) 0%, transparent 70%);
   animation: leakA 26s ease-in-out infinite alternate;
 }
 .leak-b {
   bottom: -14%; right: -10%;
   width: 52vw; height: 52vw;
-  background: radial-gradient(circle, rgba(31,111,168,0.09) 0%, transparent 72%);
+  background: radial-gradient(circle, rgba(56,132,190,0.14) 0%, transparent 72%);
   animation: leakB 34s ease-in-out infinite alternate;
 }
 /* Translate only — a scale on a blurred layer forces the blur to be redrawn. */
@@ -218,8 +269,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
     102deg,
     transparent 0px,
     transparent 38px,
-    rgba(31,111,168,0.055) 40px,
-    rgba(31,111,168,0.055) 62px,
+    rgba(99,166,214,0.085) 40px,
+    rgba(99,166,214,0.085) 62px,
     transparent 64px,
     transparent 118px
   );
@@ -244,9 +295,9 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(31,111,168,0.0) 12%,
-    rgba(31,111,168,0.3) 48%,
-    rgba(31,111,168,0.0) 88%,
+    rgba(99,166,214,0.0) 12%,
+    rgba(99,166,214,0.45) 48%,
+    rgba(99,166,214,0.0) 88%,
     transparent 100%
   );
   filter: blur(2.5px);
@@ -255,7 +306,7 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 .flare-core {
   width: 330px; height: 330px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(31,111,168,0.16) 0%, rgba(31,111,168,0.06) 38%, transparent 68%);
+  background: radial-gradient(circle, rgba(99,166,214,0.22) 0%, rgba(56,132,190,0.08) 38%, transparent 68%);
   filter: blur(14px);
   animation: flarePulse 9s ease-in-out infinite;
 }
@@ -269,7 +320,7 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   position: absolute;
   left: 0; right: 0;
   z-index: 20;
-  background: #F6F4F0;
+  background: rgb(var(--c-ink));
   pointer-events: none;
 }
 .letterbox-t { top: 0; }
@@ -287,8 +338,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   background: linear-gradient(
     104deg,
     transparent 38%,
-    rgba(31,111,168,0.18) 48%,
-    rgba(31,111,168,0.10) 54%,
+    rgba(99,166,214,0.3) 48%,
+    rgba(99,166,214,0.16) 54%,
     transparent 64%
   );
   transform: translateX(-120%);
@@ -311,9 +362,9 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(31,111,168,0.05) 42%,
-    rgba(31,111,168,0.2) 50%,
-    rgba(31,111,168,0.05) 58%,
+    rgba(99,166,214,0.06) 42%,
+    rgba(99,166,214,0.28) 50%,
+    rgba(99,166,214,0.06) 58%,
     transparent 100%
   );
   transform: translateY(-140%);
@@ -334,7 +385,7 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 .brackets span {
   position: absolute;
   width: 16px; height: 16px;
-  border-color: rgba(31,111,168,0.85);
+  border-color: rgba(99,166,214,0.9);
   opacity: 0;
   transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
@@ -356,7 +407,7 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(118% 100% at 50% 45%, transparent 42%, rgba(7,9,12,0.72) 100%);
+  background: radial-gradient(120% 104% at 50% 45%, transparent 52%, rgb(var(--c-ink) / 0.55) 100%);
 }
 
 /* ---------- Icon draw-on ---------- */
@@ -370,7 +421,7 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   height: 15px;
   background-repeat: repeat-x;
   background-size: 34px 15px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='15'%3E%3Crect x='9' y='3.5' width='16' height='8' rx='2.2' fill='%230F1319' fill-opacity='0.16'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='15'%3E%3Crect x='9' y='3.5' width='16' height='8' rx='2.2' fill='%23EDEAE4' fill-opacity='0.16'/%3E%3C/svg%3E");
 }
 
 /* ---------- Chapter cut ---------- */

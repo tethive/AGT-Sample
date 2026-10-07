@@ -80,13 +80,13 @@ export default function CinemaHUD() {
       aria-hidden
     >
       {/* Registration marks, as on a film gate */}
-      <span className="hud-el absolute left-6 top-6 h-5 w-5 border-l border-t border-bone/20" />
-      <span className="hud-el absolute right-6 top-6 h-5 w-5 border-r border-t border-bone/20" />
-      <span className="hud-el absolute bottom-6 left-6 h-5 w-5 border-b border-l border-bone/20" />
-      <span className="hud-el absolute bottom-6 right-6 h-5 w-5 border-b border-r border-bone/20" />
+      <span className="hud-el absolute left-6 top-6 h-5 w-5 border-l border-t border-[rgba(128,150,175,0.5)]" />
+      <span className="hud-el absolute right-6 top-6 h-5 w-5 border-r border-t border-[rgba(128,150,175,0.5)]" />
+      <span className="hud-el absolute bottom-6 left-6 h-5 w-5 border-b border-l border-[rgba(128,150,175,0.5)]" />
+      <span className="hud-el absolute bottom-6 right-6 h-5 w-5 border-b border-r border-[rgba(128,150,175,0.5)]" />
 
       {/* Left rail: scrub position down the reel */}
-      <div className="hud-el absolute left-[26px] top-1/2 h-40 w-px -translate-y-1/2 bg-bone/12">
+      <div className="hud-el absolute left-[26px] top-1/2 h-40 w-px -translate-y-1/2 bg-[rgba(128,150,175,0.3)]">
         <div ref={rail} className="h-full w-full origin-top scale-y-0 bg-steel" />
       </div>
 
@@ -95,7 +95,7 @@ export default function CinemaHUD() {
         <span className="flex h-1.5 w-1.5 animate-[rec_2s_ease-in-out_infinite] rounded-full bg-steel" />
         <span
           ref={tc}
-          className="font-mono text-[10px] tracking-[0.22em] text-bone-500"
+          className="font-mono text-[10px] tracking-[0.22em] text-[rgba(128,150,175,0.95)]"
         >
           00:00:00
         </span>
@@ -103,10 +103,10 @@ export default function CinemaHUD() {
 
       {/* Bottom-right: section name + progress */}
       <div className="hud-el absolute bottom-[26px] right-16 flex items-center gap-4">
-        <span ref={label} className="font-mono text-[10px] tracking-[0.22em] text-bone-500">
+        <span ref={label} className="font-mono text-[10px] tracking-[0.22em] text-[rgba(128,150,175,0.95)]">
           HERO
         </span>
-        <span className="h-3 w-px bg-bone/20" />
+        <span className="h-3 w-px bg-[rgba(128,150,175,0.45)]" />
         <span ref={pct} className="font-mono text-[10px] tracking-[0.22em] text-steel-300">
           000
         </span>

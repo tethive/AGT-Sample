@@ -96,7 +96,7 @@ export default function Contact() {
     "ct-field w-full border-b border-bone/15 bg-transparent px-0 py-4 text-[15px] text-bone placeholder:text-bone-500/60 outline-none transition-colors focus:border-steel";
 
   return (
-    <section id="contact" ref={root} className="relative overflow-hidden bg-ink">
+    <section id="contact" ref={root} className="on-dark relative overflow-hidden bg-ink">
       {/* Backdrop */}
       <div className="absolute inset-0">
         <Media
@@ -106,8 +106,8 @@ export default function Contact() {
           scrim={false}
           className="ct-media absolute inset-0"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.92)_0%,rgba(246,244,240,0.78)_45%,rgba(246,244,240,0.97)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_80%_20%,rgba(31,111,168,0.10)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--c-ink)/0.86)_0%,rgb(var(--c-ink)/0.66)_45%,rgb(var(--c-ink)/0.94)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_80%_20%,rgb(var(--c-steel)/0.10)_0%,transparent_60%)]" />
 
         {/* The finale gets the full rig: rays and a flare off frame */}
         <div className="rays" />

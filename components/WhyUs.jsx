@@ -82,7 +82,7 @@ export default function WhyUs() {
   }, []);
 
   return (
-    <section id="why" ref={root} className="relative bg-ink">
+    <section id="why" ref={root} className="on-dark relative bg-ink">
       {/* Intro */}
       <div className="mx-auto max-w-[1680px] px-5 pb-16 pt-24 md:px-10 md:pb-24 md:pt-36">
         <div className="grid gap-8 lg:grid-cols-12">
@@ -102,25 +102,15 @@ export default function WhyUs() {
       </div>
 
       {/* Stacked panels */}
-      {whyPanels.map((p) => (
+      {whyPanels.map((p, i) => (
         <div key={p.n} className="why-panel sticky top-0 h-screen w-full">
-          <div className="why-inner relative h-full w-full origin-center overflow-hidden">
-            <Media
-              src={p.img}
-              alt={p.title}
-              sizes="100vw"
-              scrim={false}
-              className="why-media absolute inset-0"
-            />
-
-            <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(246,244,240,0.93)_0%,rgba(246,244,240,0.58)_44%,rgba(246,244,240,0.1)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_0%_60%,rgba(31,111,168,0.10)_0%,transparent_65%)]" />
-
-            {/* Volumetric beams raking across the frame */}
-            <div className="rays" />
-            <div className="flare flare-streak" style={{ top: "34%", left: "-10%" }} />
-
-            <div className="relative mx-auto flex h-full max-w-[1680px] items-center px-5 md:px-10">
+          <div className="why-inner relative grid h-full w-full origin-center grid-rows-[34vh_1fr] overflow-hidden bg-ink md:grid-cols-2 md:grid-rows-1">
+            {/* ---------- Text, on its own surface ---------- */}
+            <div
+              className={`relative z-10 order-2 flex items-center px-5 py-8 md:px-12 md:py-10 lg:px-16 ${
+                i % 2 === 1 ? "md:order-2" : "md:order-1"
+              }`}
+            >
               <div className="max-w-[46ch]">
                 <span className="why-rise why-icon icon-draw mb-5 block text-steel-300">
                   <Icon name={p.icon} size={46} />
@@ -129,10 +119,10 @@ export default function WhyUs() {
                 <p className="why-rise display text-[min(14vw,10.5vh)] leading-[0.85] text-bone/10 md:text-[min(6.6vw,11.5vh)]">
                   {p.n}
                 </p>
-                <h3 className="why-rise display -mt-[0.22em] text-[min(9.6vw,7.6vh)] leading-[0.92] text-bone md:text-[min(4vw,7vh)]">
+                <h3 className="why-rise display -mt-[0.22em] text-[min(9.6vw,7.6vh)] leading-[0.92] text-bone md:text-[min(3.4vw,6.4vh)]">
                   {p.title}
                 </h3>
-                <p className="why-rise mt-5 text-[15px] leading-relaxed text-bone-600 md:mt-7 md:text-[17px]">
+                <p className="why-rise mt-5 text-[15px] leading-relaxed text-bone-600 md:mt-7 md:text-[16px]">
                   {p.desc}
                 </p>
 
@@ -150,6 +140,29 @@ export default function WhyUs() {
                   ))}
                 </ul>
               </div>
+            </div>
+
+            {/* ---------- Image, uncovered and at full strength ---------- */}
+            <div className={`relative order-1 overflow-hidden ${i % 2 === 1 ? "md:order-1" : "md:order-2"}`}>
+              <Media
+                src={p.img}
+                alt={p.title}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                scrim={false}
+                className="why-media absolute inset-0"
+              />
+
+              {/* Only a soft blend into the text side — the photo stays clean */}
+              <div
+                className={`absolute inset-0 ${
+                  i % 2 === 1
+                    ? "bg-[linear-gradient(270deg,rgb(var(--c-ink)/0.9)_0%,transparent_26%)]"
+                    : "bg-[linear-gradient(90deg,rgb(var(--c-ink)/0.9)_0%,transparent_26%)]"
+                }`}
+              />
+
+              <div className="rays" />
+              <div className="flare flare-streak" style={{ top: "34%", left: "-10%" }} />
             </div>
           </div>
         </div>

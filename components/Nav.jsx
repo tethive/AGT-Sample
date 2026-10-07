@@ -7,6 +7,8 @@ import { company, nav, products } from "@/lib/data";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [overDark, setOverDark] = useState(true);
   const bar = useRef(null);
   const overlay = useRef(null);
   const tl = useRef(null);
@@ -25,17 +27,32 @@ export default function Nav() {
           ease: "power3.out",
         });
       },
-      onToggle: (self) =>
-        gsap.to(bar.current, {
-          backgroundColor: self.isActive ? "rgba(246,244,240,0.9)" : "rgba(246,244,240,0)",
-          borderBottomColor: self.isActive
-            ? "rgba(237,234,228,0.10)"
-            : "rgba(237,234,228,0)",
-          duration: 0.4,
-        }),
+      onToggle: (self) => setScrolled(self.isActive),
     });
     return () => st.kill();
   }, [open]);
+
+  /**
+   * The bar floats over both palettes, so it has to pick one. It carries the
+   * dark scope while any `.on-dark` section is under it, and the light scope
+   * otherwise — checked against the element actually beneath the bar rather
+   * than against scroll positions, so it stays correct through the pins.
+   */
+  useEffect(() => {
+    const { ScrollTrigger } = initGsap();
+    const probe = () => {
+      const y = (bar.current?.offsetHeight ?? 64) + 8;
+      const el = document.elementFromPoint(window.innerWidth / 2, y);
+      setOverDark(Boolean(el?.closest(".on-dark")));
+    };
+    probe();
+    const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: probe });
+    window.addEventListener("resize", probe);
+    return () => {
+      st.kill();
+      window.removeEventListener("resize", probe);
+    };
+  }, []);
 
   /* Build the overlay timeline once */
   useEffect(() => {
@@ -92,12 +109,14 @@ export default function Nav() {
     <>
       <header
         ref={bar}
-        className="fixed inset-x-0 top-0 z-50 border-b border-transparent"
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500 ${
+          overDark ? "on-dark" : ""
+        } ${scrolled ? "border-bone/10 bg-ink/90" : "border-transparent bg-transparent"}`}
       >
         <div className="mx-auto flex max-w-[1680px] items-center justify-between px-5 py-4 md:px-10 md:py-5">
           <a href="#top" className="flex items-center gap-3" aria-label={company.name}>
             <Image
-              src="/brands/agt-logo-ink.png"
+              src={overDark ? "/brands/agt-logo.png" : "/brands/agt-logo-ink.png"}
               alt=""
               width={44}
               height={56}
@@ -160,7 +179,7 @@ export default function Nav() {
       {/* ---------- Full-screen overlay menu ---------- */}
       <div
         ref={overlay}
-        className="pointer-events-none fixed inset-0 z-[60]"
+        className="on-dark pointer-events-none fixed inset-0 z-[60]"
         aria-hidden={!open}
       >
         <div className="ov-bg absolute inset-0 bg-ink-800 [clip-path:inset(0_0_100%_0)]">

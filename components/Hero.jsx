@@ -25,12 +25,13 @@ export default function Hero({ ready }) {
           { height: "0vh", duration: 1.6, ease: "power4.inOut" },
           0
         )
-        // Rack focus: out of focus and low, pulling sharp as it rises
+        // Lines arrive out of depth rather than sliding up behind a mask —
+        // a mask crop reads as the text being cut in half mid-scroll.
         .fromTo(
           "[data-slide='0'] .h-line > span",
-          { yPercent: 115, rotate: 3, filter: "blur(16px)" },
-          { yPercent: 0, rotate: 0, filter: "blur(0px)", duration: 1.5, stagger: 0.11 },
-          0.55
+          { z: -520, y: 50, opacity: 0, rotateX: -32 },
+          { z: 0, y: 0, opacity: 1, rotateX: 0, duration: 1.5, stagger: 0.13 },
+          0.5
         )
         .fromTo(
           "[data-slide='0'] .h-fade",
@@ -106,7 +107,12 @@ export default function Hero({ ready }) {
         // Slides after the first start hidden and below the mask
         for (let i = 1; i < n; i++) {
           gsap.set(`.hero-img-${i}`, { opacity: 0, scale: 1.18 });
-          gsap.set(`[data-slide='${i}'] .h-line > span`, { yPercent: 115 });
+          gsap.set(`[data-slide='${i}'] .h-line > span`, {
+            z: -520,
+            y: 50,
+            opacity: 0,
+            rotateX: -32,
+          });
           gsap.set(`[data-slide='${i}'] .h-fade`, { opacity: 0, y: 24 });
         }
 
@@ -143,14 +149,38 @@ export default function Hero({ ready }) {
           if (inAt !== null) {
             tl.to(`.hero-img-${i}`, { opacity: 1, duration: 0.5, ease: "none" }, inAt - 0.1);
             // Pull into focus as it rises
-            tl.to(lines, { yPercent: 0, duration: 0.5, stagger: 0.07, ease: "power3.out" }, inAt);
+            tl.to(
+              lines,
+              {
+                z: 0,
+                y: 0,
+                opacity: 1,
+                rotateX: 0,
+                duration: 0.55,
+                stagger: 0.08,
+                ease: "power3.out",
+              },
+              inAt
+            );
             tl.to(fades, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 }, inAt + 0.1);
           }
 
           if (outAt !== null) {
             tl.to(`.hero-img-${i}`, { opacity: 0, duration: 0.5, ease: "none" }, outAt + 0.05);
             // Drop out of focus on the way up and out
-            tl.to(lines, { yPercent: -115, duration: 0.45, stagger: 0.05, ease: "power2.in" }, outAt);
+            tl.to(
+              lines,
+              {
+                z: 420,
+                y: -40,
+                opacity: 0,
+                rotateX: 26,
+                duration: 0.5,
+                stagger: 0.06,
+                ease: "power2.in",
+              },
+              outAt
+            );
             tl.to(fades, { opacity: 0, y: -20, duration: 0.35, stagger: 0.04 }, outAt);
           }
         }
@@ -171,7 +201,7 @@ export default function Hero({ ready }) {
   }, []);
 
   return (
-    <section id="top" ref={root} className="vignette relative h-screen w-full overflow-hidden bg-ink">
+    <section id="top" ref={root} className="on-dark vignette relative h-screen w-full overflow-hidden bg-ink">
       {/* ---------- Background stack, on a drifting camera ---------- */}
       <div ref={cam} className="absolute inset-[-4%] will-change-transform">
         <div className="hero-handheld absolute inset-0 will-change-transform">
@@ -194,8 +224,8 @@ export default function Hero({ ready }) {
       </div>
 
       {/* Vignette + gradient wash, keeps type legible over any frame */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.6)_0%,rgba(246,244,240,0.14)_30%,rgba(246,244,240,0.55)_64%,rgba(246,244,240,0.95)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(130%_100%_at_15%_50%,rgba(31,111,168,0.10)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--c-ink)/0.34)_0%,rgb(var(--c-ink)/0)_26%,rgb(var(--c-ink)/0.1)_48%,rgb(var(--c-ink)/0.62)_78%,rgb(var(--c-ink)/0.94)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(94deg,rgb(var(--c-ink)/0.72)_0%,rgb(var(--c-ink)/0.3)_34%,transparent_62%)]" />
 
       {/* ---------- Atmosphere: rays, flare, haze ---------- */}
       <div className="hero-atmos pointer-events-none absolute inset-0 opacity-0">
@@ -206,7 +236,7 @@ export default function Hero({ ready }) {
         <div className="flare flare-streak" style={{ top: "26%", right: "-6%" }} />
 
         {/* Low haze rolling along the bottom of the frame */}
-        <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(0deg,rgba(31,111,168,0.07)_0%,transparent_100%)] mix-blend-screen" />
+        <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(0deg,rgb(var(--c-steel)/0.07)_0%,transparent_100%)] mix-blend-screen" />
       </div>
 
       {/* ---------- Shutter ---------- */}
@@ -224,12 +254,14 @@ export default function Hero({ ready }) {
             >
               <p className="h-fade eyebrow mb-5 md:mb-7">{s.kicker}</p>
 
-              <h1 className="display text-bone">
-                <span className="h-line mask-line text-[11vw] leading-[0.9] md:text-[6.1vw]">
-                  <span className="sweep block">{s.line1}</span>
+              <h1 className="display text-bone [perspective:1100px] [transform-style:preserve-3d]">
+                <span className="h-line block text-[11vw] leading-[0.95] md:text-[6.1vw]">
+                  <span className="sweep block [transform-style:preserve-3d]">{s.line1}</span>
                 </span>
-                <span className="h-line mask-line text-[11vw] leading-[0.9] md:text-[6.1vw]">
-                  <span className="sweep block text-steel-400">{s.line2}</span>
+                <span className="h-line block text-[11vw] leading-[0.95] md:text-[6.1vw]">
+                  <span className="sweep block text-steel-400 [transform-style:preserve-3d]">
+                    {s.line2}
+                  </span>
                 </span>
               </h1>
 

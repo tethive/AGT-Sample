@@ -105,7 +105,7 @@ export default function Products() {
   }, []);
 
   return (
-    <section id="products" ref={root} className="relative h-screen overflow-hidden bg-ink">
+    <section id="products" ref={root} className="on-dark relative h-screen overflow-hidden bg-ink">
       <div className="flex h-full flex-col">
         {/* ---------- Heading rail ---------- */}
         <div className="shrink-0 px-5 pb-6 pt-24 md:px-10 md:pb-8 md:pt-28">
@@ -152,7 +152,7 @@ export default function Products() {
                 className="pr-media absolute inset-0"
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.55)_0%,rgba(246,244,240,0.05)_35%,rgba(246,244,240,0.92)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--c-ink)/0.3)_0%,rgb(var(--c-ink)/0)_34%,rgb(var(--c-ink)/0.88)_100%)]" />
               <div className="absolute inset-0 bg-steel/0 transition-colors duration-500 group-hover:bg-steel/[0.07]" />
 
               {/* Index */}

@@ -62,7 +62,7 @@ export default function Ticker() {
   );
 
   return (
-    <section className="hair-t hair-b relative overflow-hidden bg-ink-800">
+    <section className="on-dark hair-t hair-b relative overflow-hidden bg-ink-800">
       <div className="sprockets" />
 
       <div className="relative py-4 md:py-6">

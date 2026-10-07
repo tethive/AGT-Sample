@@ -33,9 +33,9 @@ export default function Media({
 
   const scrims = {
     bottom:
-      "bg-[linear-gradient(180deg,rgba(246,244,240,0.42)_0%,rgba(246,244,240,0)_32%,rgba(246,244,240,0.3)_62%,rgba(246,244,240,0.92)_100%)]",
-    left: "bg-[linear-gradient(104deg,rgba(246,244,240,0.92)_0%,rgba(246,244,240,0.58)_44%,rgba(246,244,240,0.12)_100%)]",
-    full: "bg-[linear-gradient(180deg,rgba(246,244,240,0.7)_0%,rgba(246,244,240,0.42)_45%,rgba(246,244,240,0.88)_100%)]",
+      "bg-[linear-gradient(180deg,rgb(var(--c-ink)/0.2)_0%,rgb(var(--c-ink)/0)_30%,rgb(var(--c-ink)/0.22)_58%,rgb(var(--c-ink)/0.9)_100%)]",
+    left: "bg-[linear-gradient(104deg,rgb(var(--c-ink)/0.92)_0%,rgb(var(--c-ink)/0.58)_44%,rgb(var(--c-ink)/0.12)_100%)]",
+    full: "bg-[linear-gradient(180deg,rgb(var(--c-ink)/0.7)_0%,rgb(var(--c-ink)/0.42)_45%,rgb(var(--c-ink)/0.88)_100%)]",
   };
 
   return (

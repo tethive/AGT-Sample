@@ -4,21 +4,34 @@ module.exports = {
   theme: {
     extend: {
       /**
-       * Light theme.
-       *
-       * The two scales keep their roles rather than their values: `ink` is
-       * always the surface and `bone` is always the type. Inverting what they
-       * resolve to flips the whole site without touching a single component
-       * class — and makes going back, or adding a toggle, a config change.
-       *
-       * ink  — paper surfaces, lightest first
-       * bone — type and hairlines, darkest first
+       * Colours resolve through CSS variables rather than fixed hex, so a
+       * section can flip its whole palette by adding `.on-dark`. `ink` is
+       * always the surface and `bone` always the type — only what they point
+       * at changes. That is what lets paper reading sections and near-black
+       * cinematic sections share one set of components.
        */
       colors: {
-        ink:   { DEFAULT: "#F6F4F0", 800: "#EFECE6", 700: "#E7E3DB", 600: "#DBD6CC", 500: "#C9C3B7" },
-        steel: { DEFAULT: "#1F6FA8", 400: "#1C6396", 300: "#17557F", 600: "#164B70", 700: "#CBE0F0" },
-        bone:  { DEFAULT: "#0F1319", 600: "#454C56", 500: "#6B727B", 400: "#949AA2" },
-        sand:  { DEFAULT: "#9A7B18" },
+        ink: {
+          DEFAULT: "rgb(var(--c-ink) / <alpha-value>)",
+          800: "rgb(var(--c-ink-800) / <alpha-value>)",
+          700: "rgb(var(--c-ink-700) / <alpha-value>)",
+          600: "rgb(var(--c-ink-600) / <alpha-value>)",
+          500: "rgb(var(--c-ink-500) / <alpha-value>)",
+        },
+        bone: {
+          DEFAULT: "rgb(var(--c-bone) / <alpha-value>)",
+          600: "rgb(var(--c-bone-600) / <alpha-value>)",
+          500: "rgb(var(--c-bone-500) / <alpha-value>)",
+          400: "rgb(var(--c-bone-400) / <alpha-value>)",
+        },
+        steel: {
+          DEFAULT: "rgb(var(--c-steel) / <alpha-value>)",
+          400: "rgb(var(--c-steel-400) / <alpha-value>)",
+          300: "rgb(var(--c-steel-300) / <alpha-value>)",
+          600: "rgb(var(--c-steel-600) / <alpha-value>)",
+          700: "rgb(var(--c-steel-700) / <alpha-value>)",
+        },
+        sand: { DEFAULT: "rgb(var(--c-sand) / <alpha-value>)" },
       },
       fontFamily: {
         display: ["var(--font-display)", "Impact", "sans-serif"],
