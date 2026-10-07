@@ -45,7 +45,7 @@ npm run build && npm start
 | 08 | Coverage | Pulsing location grid over a drifting ghost wordmark |
 | 09 | Milestones | Real events from the current site; frames wipe open, images parallax |
 | 10 | Contact | Character-by-character headline, enquiry form, full contact block |
-| 11 | Footer | Oversized wordmark, quick links, embedded map |
+| 11 | Footer | Contact block, quick links, embedded map |
 
 Chapter cuts (`components/Cut.jsx`) sit between sections as numbered slates, so the long scroll
 reads as a sequence of takes rather than one continuous page.

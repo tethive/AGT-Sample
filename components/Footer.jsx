@@ -1,33 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { initGsap } from "@/lib/anim";
 import { company, nav } from "@/lib/data";
 
 export default function Footer() {
-  const root = useRef(null);
-
-  useEffect(() => {
-    const { gsap } = initGsap();
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".ft-word",
-        { yPercent: 55, opacity: 0 },
-        {
-          yPercent: 0,
-          opacity: 1,
-          duration: 1.3,
-          ease: "power4.out",
-          scrollTrigger: { trigger: ".ft-word-wrap", start: "top 95%" },
-        }
-      );
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <footer ref={root} className="hair-t relative overflow-hidden bg-ink-800">
+    <footer className="hair-t relative overflow-hidden bg-ink-800">
       <div className="mx-auto max-w-[1680px] px-5 pt-20 md:px-10 md:pt-28">
         {/* ---------- Columns ---------- */}
         <div className="grid gap-12 pb-16 md:grid-cols-12 md:gap-8 md:pb-24">
@@ -117,12 +95,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ---------- Oversized wordmark ---------- */}
-        <div className="ft-word-wrap overflow-hidden border-t border-bone/10 pt-6">
-          <p className="ft-word display whitespace-nowrap text-center text-[12.8vw] leading-[0.84] text-bone/[0.08]">
-            AMBIKA GLOBAL
-          </p>
-        </div>
+        <div className="h-8 md:h-12" />
       </div>
 
       {/* ---------- Legal bar ---------- */}
