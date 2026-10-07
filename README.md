@@ -1,8 +1,13 @@
 # Ambika Global Traders — Home Page (Sample)
 
 A single-page, animation-led concept for [ambikagt.com](https://ambikagt.com), built as a pitch
-piece. Art direction: **Industrial Noir** — near-black canvas, oversized condensed display type,
-cinematic graded imagery, and a steel-blue accent pulled from the existing AGT logo.
+piece. Art direction: **Architectural Daylight** — a warm paper canvas, heavy ink display type, imagery
+graded to a steel-on-paper duotone, and a blueprint-blue accent pulled from the existing AGT logo.
+
+The palette is two scales in `tailwind.config.js`, `ink` (surfaces) and `bone` (type), and every
+component references them by role rather than by colour. Swapping what those two resolve to flips
+the whole site, so going back to the dark build — or adding a light/dark toggle — is a config
+change, not a rewrite.
 
 ## Run it
 

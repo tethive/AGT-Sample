@@ -194,8 +194,8 @@ export default function Hero({ ready }) {
       </div>
 
       {/* Vignette + gradient wash, keeps type legible over any frame */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,12,0.82)_0%,rgba(7,9,12,0.28)_32%,rgba(7,9,12,0.55)_68%,rgba(7,9,12,0.96)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(130%_100%_at_15%_50%,rgba(46,127,184,0.16)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.6)_0%,rgba(246,244,240,0.14)_30%,rgba(246,244,240,0.55)_64%,rgba(246,244,240,0.95)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(130%_100%_at_15%_50%,rgba(31,111,168,0.10)_0%,transparent_60%)]" />
 
       {/* ---------- Atmosphere: rays, flare, haze ---------- */}
       <div className="hero-atmos pointer-events-none absolute inset-0 opacity-0">
@@ -206,7 +206,7 @@ export default function Hero({ ready }) {
         <div className="flare flare-streak" style={{ top: "26%", right: "-6%" }} />
 
         {/* Low haze rolling along the bottom of the frame */}
-        <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(0deg,rgba(46,127,184,0.1)_0%,transparent_100%)] mix-blend-screen" />
+        <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(0deg,rgba(31,111,168,0.07)_0%,transparent_100%)] mix-blend-screen" />
       </div>
 
       {/* ---------- Shutter ---------- */}

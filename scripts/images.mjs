@@ -31,19 +31,27 @@ try {
 }
 
 /**
- * The steel duotone, baked in rather than applied at runtime.
+ * The steel-on-paper duotone, baked in rather than applied at runtime.
  *
- * Desaturate, then map black->#0d1b2b and white->#bdd2e3 with a straight
- * two-point curve per channel. Doing this live in CSS cost a grayscale()
+ * Desaturate, then map each channel through a three-point curve: shadows to a
+ * deep steel, midtones lifted, highlights to paper. The midpoint matters —
+ * a straight two-point curve leaves a dark source frame (a dusk shot, say)
+ * looking heavy against a light page.
+ *
+ * Baked rather than applied in CSS because doing it live cost a grayscale()
  * filter plus two full-size mix-blend-mode layers per image — around 58
  * viewports of re-blended pixels every frame, which made scrolling stutter.
  */
-const SHADOW = [13, 27, 43];
-const HIGHLIGHT = [189, 210, 227];
-const pt = (i) => `0/${(SHADOW[i] / 255).toFixed(3)} 1/${(HIGHLIGHT[i] / 255).toFixed(3)}`;
+const SHADOW = [37, 52, 71];     // #253447
+const MID = [153, 159, 167];     // lifted midtone
+const HIGHLIGHT = [246, 245, 241];
+const ch = (i) =>
+  `0/${(SHADOW[i] / 255).toFixed(3)} ` +
+  `0.5/${(MID[i] / 255).toFixed(3)} ` +
+  `1/${(HIGHLIGHT[i] / 255).toFixed(3)}`;
 const DUOTONE =
-  `eq=contrast=1.06,hue=s=0,` +
-  `curves=r='${pt(0)}':g='${pt(1)}':b='${pt(2)}'`;
+  `hue=s=0,eq=contrast=0.95,` +
+  `curves=r='${ch(0)}':g='${ch(1)}':b='${ch(2)}'`;
 
 // Width and WebP quality per filename prefix. Sized to the layout, not to the
 // monitor — nothing here is ever displayed larger than these numbers.

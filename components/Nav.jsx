@@ -27,7 +27,7 @@ export default function Nav() {
       },
       onToggle: (self) =>
         gsap.to(bar.current, {
-          backgroundColor: self.isActive ? "rgba(7,9,12,0.9)" : "rgba(7,9,12,0)",
+          backgroundColor: self.isActive ? "rgba(246,244,240,0.9)" : "rgba(246,244,240,0)",
           borderBottomColor: self.isActive
             ? "rgba(237,234,228,0.10)"
             : "rgba(237,234,228,0)",
@@ -97,7 +97,7 @@ export default function Nav() {
         <div className="mx-auto flex max-w-[1680px] items-center justify-between px-5 py-4 md:px-10 md:py-5">
           <a href="#top" className="flex items-center gap-3" aria-label={company.name}>
             <Image
-              src="/brands/agt-logo.png"
+              src="/brands/agt-logo-ink.png"
               alt=""
               width={44}
               height={56}

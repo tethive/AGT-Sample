@@ -113,8 +113,8 @@ export default function WhyUs() {
               className="why-media absolute inset-0"
             />
 
-            <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(7,9,12,0.95)_0%,rgba(7,9,12,0.7)_42%,rgba(7,9,12,0.3)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_0%_60%,rgba(46,127,184,0.18)_0%,transparent_65%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(246,244,240,0.93)_0%,rgba(246,244,240,0.58)_44%,rgba(246,244,240,0.1)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_0%_60%,rgba(31,111,168,0.10)_0%,transparent_65%)]" />
 
             {/* Volumetric beams raking across the frame */}
             <div className="rays" />

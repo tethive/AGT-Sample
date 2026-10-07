@@ -3,11 +3,22 @@ module.exports = {
   content: ["./app/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./lib/**/*.{js,jsx}"],
   theme: {
     extend: {
+      /**
+       * Light theme.
+       *
+       * The two scales keep their roles rather than their values: `ink` is
+       * always the surface and `bone` is always the type. Inverting what they
+       * resolve to flips the whole site without touching a single component
+       * class — and makes going back, or adding a toggle, a config change.
+       *
+       * ink  — paper surfaces, lightest first
+       * bone — type and hairlines, darkest first
+       */
       colors: {
-        ink:   { DEFAULT: "#07090C", 800: "#0B0E13", 700: "#11151C", 600: "#181D26", 500: "#222935" },
-        steel: { DEFAULT: "#2E7FB8", 400: "#4FA3DC", 300: "#7CC2EE", 600: "#1F5F8E", 700: "#164564" },
-        bone:  { DEFAULT: "#EDEAE4", 600: "#B8B4AC", 500: "#8A857C", 400: "#5E5A53" },
-        sand:  { DEFAULT: "#C9A227" },
+        ink:   { DEFAULT: "#F6F4F0", 800: "#EFECE6", 700: "#E7E3DB", 600: "#DBD6CC", 500: "#C9C3B7" },
+        steel: { DEFAULT: "#1F6FA8", 400: "#1C6396", 300: "#17557F", 600: "#164B70", 700: "#CBE0F0" },
+        bone:  { DEFAULT: "#0F1319", 600: "#454C56", 500: "#6B727B", 400: "#949AA2" },
+        sand:  { DEFAULT: "#9A7B18" },
       },
       fontFamily: {
         display: ["var(--font-display)", "Impact", "sans-serif"],

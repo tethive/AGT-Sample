@@ -18,7 +18,7 @@ function LogoRow({ logos, reverse, rowRef }) {
             alt=""
             width={150}
             height={150}
-            className="h-full w-auto max-w-full object-contain opacity-45 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
+            className="h-full w-auto max-w-full object-contain opacity-60 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
           />
         </div>
       ))}

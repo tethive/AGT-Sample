@@ -52,7 +52,7 @@ export default function Ticker() {
     <>
       {tickerItems.map((t, i) => (
         <span key={`${t}-${i}`} className="flex shrink-0 items-center">
-          <span className="display px-6 text-[5.4vw] leading-none text-bone/90 md:px-8 md:text-[3.1vw]">
+          <span className="display px-6 text-[5.4vw] leading-none text-bone md:px-8 md:text-[3.1vw]">
             {t}
           </span>
           <span className="h-2 w-2 shrink-0 rotate-45 bg-steel" />

@@ -152,7 +152,7 @@ export default function Products() {
                 className="pr-media absolute inset-0"
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,12,0.55)_0%,rgba(7,9,12,0.05)_35%,rgba(7,9,12,0.92)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.55)_0%,rgba(246,244,240,0.05)_35%,rgba(246,244,240,0.92)_100%)]" />
               <div className="absolute inset-0 bg-steel/0 transition-colors duration-500 group-hover:bg-steel/[0.07]" />
 
               {/* Index */}
@@ -192,7 +192,7 @@ export default function Products() {
           ))}
 
             {/* Tail card — closes the sequence with a call to action */}
-            <article className="relative flex h-full w-[78vw] shrink-0 flex-col justify-between border border-steel/30 bg-steel-700/20 p-6 sm:w-[54vw] md:w-[32vw] md:p-9 lg:w-[25vw]">
+            <article className="relative flex h-full w-[78vw] shrink-0 flex-col justify-between border border-steel/25 bg-steel-700/50 p-6 sm:w-[54vw] md:w-[32vw] md:p-9 lg:w-[25vw]">
               <span className="font-mono text-[11px] tracking-[0.25em] text-steel-300">
                 {String(products.length + 1).padStart(2, "0")}
               </span>

@@ -106,8 +106,8 @@ export default function Contact() {
           scrim={false}
           className="ct-media absolute inset-0"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,12,0.92)_0%,rgba(7,9,12,0.78)_45%,rgba(7,9,12,0.97)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_80%_20%,rgba(46,127,184,0.2)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(246,244,240,0.92)_0%,rgba(246,244,240,0.78)_45%,rgba(246,244,240,0.97)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_80%_20%,rgba(31,111,168,0.10)_0%,transparent_60%)]" />
 
         {/* The finale gets the full rig: rays and a flare off frame */}
         <div className="rays" />

@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid gap-12 pb-16 md:grid-cols-12 md:gap-8 md:pb-24">
           <div className="md:col-span-5">
             <div className="flex items-center gap-4">
-              <Image src="/brands/agt-logo.png" alt="" width={56} height={72} className="h-14 w-auto" />
+              <Image src="/brands/agt-logo-ink.png" alt="" width={56} height={72} className="h-14 w-auto" />
               <div>
                 <p className="font-display text-xl leading-tight tracking-wide text-bone">
                   AMBIKA GLOBAL
@@ -89,7 +89,7 @@ export default function Footer() {
                 height="170"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="block grayscale invert-[0.92] contrast-[0.85]"
+                className="block grayscale-[0.55] contrast-[1.02]"
               />
             </div>
           </div>

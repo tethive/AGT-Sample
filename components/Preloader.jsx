@@ -78,13 +78,13 @@ export default function Preloader({ onDone }) {
         <div className="mb-6 overflow-hidden">
           <span
             ref={wordRef}
-            className="display block text-[10vw] leading-none text-bone/90 sm:text-[6.6vw]"
+            className="display block text-[10vw] leading-none text-bone sm:text-[6.6vw]"
           >
             CEMENT
           </span>
         </div>
 
-        <div className="h-px w-[min(520px,70vw)] overflow-hidden bg-bone/15">
+        <div className="h-px w-[min(520px,70vw)] overflow-hidden bg-bone/20">
           <div
             ref={barRef}
             className="h-full w-full origin-left scale-x-0 bg-steel"
