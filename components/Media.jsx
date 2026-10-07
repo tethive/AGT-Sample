@@ -53,15 +53,11 @@ export default function Media({
         placeholder={blurDataURL ? "blur" : "empty"}
         blurDataURL={blurDataURL}
         className={`media-img object-cover ${imgClassName}`}
+        style={{ transform: "translateZ(0)" }}
       />
 
-      {/* Duotone pass — grayscale underneath, two blend layers on top */}
-      {tone === "steel" ? (
-        <>
-          <span className="media-duo-lo pointer-events-none absolute inset-0" />
-          <span className="media-duo-hi pointer-events-none absolute inset-0" />
-        </>
-      ) : null}
+      {/* The steel duotone is baked into the WebP itself — see globals.css */}
+      <span className="media-warm pointer-events-none absolute inset-0" />
 
       {scrim ? (
         <span className={`pointer-events-none absolute inset-0 ${scrims[scrim] || scrims.bottom}`} />

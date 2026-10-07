@@ -27,8 +27,7 @@ export default function Nav() {
       },
       onToggle: (self) =>
         gsap.to(bar.current, {
-          backgroundColor: self.isActive ? "rgba(7,9,12,0.72)" : "rgba(7,9,12,0)",
-          backdropFilter: self.isActive ? "blur(14px)" : "blur(0px)",
+          backgroundColor: self.isActive ? "rgba(7,9,12,0.9)" : "rgba(7,9,12,0)",
           borderBottomColor: self.isActive
             ? "rgba(237,234,228,0.10)"
             : "rgba(237,234,228,0)",

@@ -161,7 +161,7 @@ export default function Products() {
               </span>
 
               {/* Icon, drawn on when the card reaches the viewport */}
-              <span className="pr-icon icon-draw absolute right-5 top-5 z-10 text-steel-300 drop-shadow-[0_0_14px_rgba(46,127,184,0.75)] md:right-6 md:top-6">
+              <span className="pr-icon icon-draw absolute right-5 top-5 z-10 text-steel-300 md:right-6 md:top-6">
                 <Icon name={p.icon} size={40} />
               </span>
 

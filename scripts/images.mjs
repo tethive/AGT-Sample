@@ -30,6 +30,21 @@ try {
   process.exit(1);
 }
 
+/**
+ * The steel duotone, baked in rather than applied at runtime.
+ *
+ * Desaturate, then map black->#0d1b2b and white->#bdd2e3 with a straight
+ * two-point curve per channel. Doing this live in CSS cost a grayscale()
+ * filter plus two full-size mix-blend-mode layers per image — around 58
+ * viewports of re-blended pixels every frame, which made scrolling stutter.
+ */
+const SHADOW = [13, 27, 43];
+const HIGHLIGHT = [189, 210, 227];
+const pt = (i) => `0/${(SHADOW[i] / 255).toFixed(3)} 1/${(HIGHLIGHT[i] / 255).toFixed(3)}`;
+const DUOTONE =
+  `eq=contrast=1.06,hue=s=0,` +
+  `curves=r='${pt(0)}':g='${pt(1)}':b='${pt(2)}'`;
+
 // Width and WebP quality per filename prefix. Sized to the layout, not to the
 // monitor — nothing here is ever displayed larger than these numbers.
 const profile = (name) => {
@@ -61,13 +76,13 @@ if (fs.existsSync(SRC)) {
 
     run([
       "-y", "-i", path.join(SRC, file),
-      "-vf", `scale='min(${w},iw)':-2:flags=lanczos`,
+      "-vf", `scale='min(${w},iw)':-2:flags=lanczos,${DUOTONE}`,
       "-quality", String(q),
       "-compression_level", "6",
       out,
     ]);
 
-    console.log(`encoded  ${name.padEnd(18)} ${w}px q${q}  ${(fs.statSync(out).size / 1024).toFixed(0)}K`);
+    console.log(`graded   ${name.padEnd(18)} ${w}px q${q}  ${(fs.statSync(out).size / 1024).toFixed(0)}K`);
   }
 } else {
   console.log("no assets-src/ — keeping existing WebP, rebuilding blur map only\n");

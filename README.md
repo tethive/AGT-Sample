@@ -90,9 +90,10 @@ Every content image renders through [`components/Media.jsx`](components/Media.js
 whole image look in one place:
 
 - **Steel duotone** — the photograph is reduced to luminance, then shadows are lifted to deep
-  ink-blue and highlights pulled to cool bone with two blend layers. Stock from a dozen unrelated
-  shoots reads as one roll of film, and unlike a plain brightness cut it stays legible instead of
-  crushing to black.
+  ink-blue and highlights pulled to cool bone. Stock from a dozen unrelated shoots reads as one roll
+  of film, and unlike a plain brightness cut it stays legible instead of crushing to black. The
+  grade is **baked into the WebP files**, not applied at runtime — see Performance below. Colour
+  originals live in `assets-src/`, so it can be re-derived or re-tuned at any time.
 - **Blur-up** — each image ships a 24px inline WebP preview (generated into
   [`lib/blur.js`](lib/blur.js)), so a frame is never empty while it loads.
 - **Optional hairline frame** with corner ticks, and a choice of scrim gradient.
@@ -116,6 +117,36 @@ after hand-swapping a file in `public/img/`.
 
 There is no backend. The enquiry form opens WhatsApp with a prefilled message to the yard number,
 which is a genuine working path for this business. Wiring it to email or a CRM is a later step.
+
+## Performance
+
+Scroll smoothness on a page like this is decided almost entirely by how much the GPU has to
+re-composite each frame, not by JavaScript. An earlier revision applied the image grade live, which
+measured at:
+
+| | before | after |
+| --- | --- | --- |
+| `mix-blend-mode` layers | 66 (≈58 viewports of area) | 3 (≈0.5) |
+| Filtered elements | 80 (≈28 viewports) | 38 (≈2) |
+| `backdrop-filter` layers | 6 | 0 |
+
+What changed:
+
+- The duotone is **baked into the WebP** instead of `grayscale()` + two blend layers per image.
+- Blend modes dropped from the light leaks, god rays, dust canvas and headline sweep — on a
+  near-black page `screen` looks the same as normal compositing but costs far more.
+- The `blur(90px)` light leaks animate **translate only**. Scaling a blurred layer forces the blur
+  to be re-rasterised every frame; translating it does not.
+- Same reasoning removed `scaleX` from the lens-flare pulse (now opacity only) and `skewX` from the
+  god rays.
+- The film grain overlay was `inset: -200%` — a layer 25× the viewport. Now `-15%` with an 8px drift.
+- `filter: blur()` no longer animates on the scrubbed hero headlines; blur on full-screen display
+  type is the most expensive tween on the page.
+- The dust canvas stamps one cached sprite instead of building a radial gradient per particle per
+  frame (~4,200 gradients a second).
+
+Measured after, over a 160-step scroll of the whole page: **zero long tasks**, 0 ms total blocking,
+style-and-layout at 3.8 ms median / 9.4 ms worst against a 16.7 ms frame budget.
 
 ## Notes
 

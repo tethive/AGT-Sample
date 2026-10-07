@@ -97,7 +97,7 @@ export default function Milestones() {
                   className="ms-media absolute inset-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-                <span className="absolute left-5 top-5 bg-ink/80 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] text-steel-300 backdrop-blur">
+                <span className="absolute left-5 top-5 bg-ink/90 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] text-steel-300">
                   {m.date}
                 </span>
               </div>

@@ -69,7 +69,6 @@ export default function Hero({ ready }) {
     const float = gsap.to(".hero-handheld", {
       x: "random(-14, 14)",
       y: "random(-10, 10)",
-      rotation: "random(-0.3, 0.3)",
       duration: 7,
       ease: "sine.inOut",
       repeat: -1,
@@ -107,10 +106,7 @@ export default function Hero({ ready }) {
         // Slides after the first start hidden and below the mask
         for (let i = 1; i < n; i++) {
           gsap.set(`.hero-img-${i}`, { opacity: 0, scale: 1.18 });
-          gsap.set(`[data-slide='${i}'] .h-line > span`, {
-            yPercent: 115,
-            filter: "blur(14px)",
-          });
+          gsap.set(`[data-slide='${i}'] .h-line > span`, { yPercent: 115 });
           gsap.set(`[data-slide='${i}'] .h-fade`, { opacity: 0, y: 24 });
         }
 
@@ -147,34 +143,14 @@ export default function Hero({ ready }) {
           if (inAt !== null) {
             tl.to(`.hero-img-${i}`, { opacity: 1, duration: 0.5, ease: "none" }, inAt - 0.1);
             // Pull into focus as it rises
-            tl.to(
-              lines,
-              {
-                yPercent: 0,
-                filter: "blur(0px)",
-                duration: 0.5,
-                stagger: 0.07,
-                ease: "power3.out",
-              },
-              inAt
-            );
+            tl.to(lines, { yPercent: 0, duration: 0.5, stagger: 0.07, ease: "power3.out" }, inAt);
             tl.to(fades, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 }, inAt + 0.1);
           }
 
           if (outAt !== null) {
             tl.to(`.hero-img-${i}`, { opacity: 0, duration: 0.5, ease: "none" }, outAt + 0.05);
             // Drop out of focus on the way up and out
-            tl.to(
-              lines,
-              {
-                yPercent: -115,
-                filter: "blur(12px)",
-                duration: 0.45,
-                stagger: 0.05,
-                ease: "power2.in",
-              },
-              outAt
-            );
+            tl.to(lines, { yPercent: -115, duration: 0.45, stagger: 0.05, ease: "power2.in" }, outAt);
             tl.to(fades, { opacity: 0, y: -20, duration: 0.35, stagger: 0.04 }, outAt);
           }
         }
@@ -209,14 +185,11 @@ export default function Hero({ ready }) {
                 sizes="100vw"
                 placeholder="blur"
                 blurDataURL={blurFor(s.img)}
-                className="graded object-cover"
+                className="object-cover"
               />
             </div>
           ))}
 
-          {/* Duotone pass over the whole stack, so all three frames match */}
-          <span className="media-duo-lo pointer-events-none absolute inset-0" />
-          <span className="media-duo-hi pointer-events-none absolute inset-0" />
         </div>
       </div>
 

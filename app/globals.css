@@ -66,20 +66,21 @@ body { font-weight: 300; letter-spacing: -0.005em; }
 .grain::after {
   content: "";
   position: fixed;
-  inset: -200%;
+  inset: -15%;
   z-index: 60;
+  will-change: transform;
   pointer-events: none;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 0.6s steps(1) infinite;
 }
 @keyframes grain {
-  0%   { transform: translate(0, 0); }
-  20%  { transform: translate(-6%, 4%); }
-  40%  { transform: translate(3%, -7%); }
-  60%  { transform: translate(-4%, -3%); }
-  80%  { transform: translate(5%, 6%); }
-  100% { transform: translate(0, 0); }
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(-7px, 5px, 0); }
+  40%  { transform: translate3d(4px, -8px, 0); }
+  60%  { transform: translate3d(-5px, -4px, 0); }
+  80%  { transform: translate3d(6px, 7px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 /* ======================================================================
@@ -88,39 +89,23 @@ body { font-weight: 300; letter-spacing: -0.005em; }
    lifted to deep ink-blue and highlights pulled to cool bone. Stock from a
    dozen different shoots ends up reading as one roll of film — and, unlike a
    plain brightness cut, it stays legible instead of crushing to black.
+
+   The grade is BAKED INTO THE WEBP FILES by scripts/images.mjs, not applied at
+   runtime. Doing it live cost a grayscale() filter plus two full-size
+   mix-blend-mode layers on every image — together roughly 58 viewports of
+   re-blended pixels per frame, which is what made scrolling stutter. Colour
+   originals live in assets-src/ so the grade can be re-derived.
    ====================================================================== */
-.media-img {
-  filter: grayscale(1) contrast(1.06) brightness(1.02);
-}
 
-/* Shadows -> steel ink */
-.media-duo-lo {
-  background: linear-gradient(176deg, #15304a 0%, #0d1b2b 55%, #0a1118 100%);
-  mix-blend-mode: lighten;
+/* Hover lift: a cheap colour wash, no filter and no blend mode */
+.media-img { transition: transform 1.1s var(--ease); }
+.media-warm {
+  background: linear-gradient(0deg, rgba(120,170,210,0.16), rgba(120,170,210,0.16));
+  opacity: 0;
+  transition: opacity 0.55s var(--ease);
 }
-/* Highlights -> cool bone. Kept below pure white so the frames stay moody
-   rather than washing out under the scrims that sit over them. */
-.media-duo-hi {
-  background: linear-gradient(176deg, #d6e2ed 0%, #b9cfe1 58%, #9db7cb 100%);
-  mix-blend-mode: multiply;
-}
+.group:hover .media-warm { opacity: 1; }
 
-/* Neutral variant, for places where a tint would fight the content */
-.media-neutral .media-img {
-  filter: grayscale(0.78) contrast(1.08) brightness(0.9);
-}
-.media-raw .media-img { filter: none; }
-
-/* A touch of warmth on hover, so cards feel alive under the cursor */
-.media { transition: filter 0.6s var(--ease); }
-.group:hover .media-duo-hi { opacity: 0.86; }
-.group:hover .media-img { filter: grayscale(0.62) contrast(1.08) brightness(1.06); }
-.media-duo-hi, .media-img { transition: opacity 0.6s var(--ease), filter 0.6s var(--ease); }
-
-/* Legacy single-image grade, still used by the hero stack */
-.graded {
-  filter: grayscale(1) contrast(1.06) brightness(1.02);
-}
 .graded-wrap { position: relative; overflow: hidden; }
 
 /* ---------- Custom cursor ---------- */
@@ -198,8 +183,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
-  mix-blend-mode: screen;
   pointer-events: none;
+  will-change: transform;
 }
 .leak-a {
   top: -10%; left: -8%;
@@ -213,13 +198,14 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   background: radial-gradient(circle, rgba(124,194,238,0.20) 0%, transparent 72%);
   animation: leakB 34s ease-in-out infinite alternate;
 }
+/* Translate only — a scale on a blurred layer forces the blur to be redrawn. */
 @keyframes leakA {
-  0%   { transform: translate3d(0,0,0) scale(1); opacity: 0.55; }
-  100% { transform: translate3d(12vw, 8vh, 0) scale(1.22); opacity: 0.95; }
+  0%   { transform: translate3d(0,0,0); opacity: 0.5; }
+  100% { transform: translate3d(12vw, 8vh, 0); opacity: 0.9; }
 }
 @keyframes leakB {
-  0%   { transform: translate3d(0,0,0) scale(1.1); opacity: 0.4; }
-  100% { transform: translate3d(-14vw, -10vh, 0) scale(1); opacity: 0.8; }
+  0%   { transform: translate3d(0,0,0); opacity: 0.38; }
+  100% { transform: translate3d(-14vw, -10vh, 0); opacity: 0.78; }
 }
 
 /* ---------- Volumetric god rays ---------- */
@@ -227,8 +213,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   position: absolute;
   inset: -30% -10%;
   pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.85;
+  opacity: 0.55;
+  will-change: transform;
   background: repeating-linear-gradient(
     102deg,
     transparent 0px,
@@ -243,15 +229,15 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   animation: rays 22s ease-in-out infinite alternate;
 }
 @keyframes rays {
-  0%   { transform: translateX(-3%) skewX(0deg);   opacity: 0.5; }
-  100% { transform: translateX(3%)  skewX(-1.5deg); opacity: 0.95; }
+  0%   { transform: translate3d(-3%, 0, 0); opacity: 0.34; }
+  100% { transform: translate3d(3%, 0, 0);  opacity: 0.62; }
 }
 
 /* ---------- Anamorphic lens flare ---------- */
 .flare {
   position: absolute;
   pointer-events: none;
-  mix-blend-mode: screen;
+  will-change: opacity;
 }
 .flare-streak {
   height: 2px;
@@ -275,8 +261,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   animation: flarePulse 9s ease-in-out infinite;
 }
 @keyframes flarePulse {
-  0%, 100% { opacity: 0.45; transform: scaleX(1); }
-  50%      { opacity: 0.95; transform: scaleX(1.12); }
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.85; }
 }
 
 /* ---------- Letterbox / shutter ---------- */
@@ -308,8 +294,8 @@ body { font-weight: 300; letter-spacing: -0.005em; }
   );
   transform: translateX(-120%);
   animation: sweep 7.5s cubic-bezier(0.5, 0, 0.2, 1) infinite;
-  mix-blend-mode: overlay;
   pointer-events: none;
+  opacity: 0.5;
 }
 @keyframes sweep {
   0%, 62%  { transform: translateX(-120%); }

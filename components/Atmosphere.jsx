@@ -22,7 +22,26 @@ export default function Atmosphere() {
     let dpr = 1;
     let motes = [];
 
-    const COUNT = window.innerWidth < 768 ? 45 : 110;
+    const COUNT = window.innerWidth < 768 ? 28 : 70;
+
+    // One mote, drawn once into an offscreen canvas. Building a radial gradient
+    // per particle per frame (70 x 60fps = 4,200 gradients a second) was pure
+    // waste; stamping a cached sprite costs almost nothing.
+    const SPRITE = 32;
+    const sprite = document.createElement("canvas");
+    sprite.width = sprite.height = SPRITE;
+    {
+      const sx = sprite.getContext("2d");
+      const g = sx.createRadialGradient(
+        SPRITE / 2, SPRITE / 2, 0,
+        SPRITE / 2, SPRITE / 2, SPRITE / 2
+      );
+      g.addColorStop(0, "rgba(205,228,248,1)");
+      g.addColorStop(0.45, "rgba(205,228,248,0.35)");
+      g.addColorStop(1, "rgba(205,228,248,0)");
+      sx.fillStyle = g;
+      sx.fillRect(0, 0, SPRITE, SPRITE);
+    }
 
     const seed = () => {
       motes = Array.from({ length: COUNT }, () => ({
@@ -57,6 +76,7 @@ export default function Atmosphere() {
     const draw = () => {
       t += 0.016;
       ctx.clearRect(0, 0, w, h);
+      ctx.globalAlpha = 1;
 
       for (const m of motes) {
         m.x += m.vx * 0.004;
@@ -74,15 +94,9 @@ export default function Atmosphere() {
         const py = m.y * h;
 
         // A tight halo keeps these reading as dust, not as bokeh on a dirty lens
-        const halo = m.r * 2.6;
-        const g = ctx.createRadialGradient(px, py, 0, px, py, halo);
-        g.addColorStop(0, `rgba(205,228,248,${m.a * twinkle})`);
-        g.addColorStop(0.45, `rgba(205,228,248,${m.a * twinkle * 0.35})`);
-        g.addColorStop(1, "rgba(205,228,248,0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(px, py, halo, 0, Math.PI * 2);
-        ctx.fill();
+        const d = m.r * 5.2;
+        ctx.globalAlpha = m.a * twinkle;
+        ctx.drawImage(sprite, px - d / 2, py - d / 2, d, d);
       }
     };
 
@@ -97,7 +111,9 @@ export default function Atmosphere() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[44]" aria-hidden>
-      <canvas ref={canvas} className="absolute inset-0 mix-blend-screen" />
+      {/* No blend mode: light dots on a near-black page look the same under
+          normal compositing, and `screen` on a full-viewport layer is costly. */}
+      <canvas ref={canvas} className="absolute inset-0" />
 
       {/* Slow light leaks — the bloom of an off-camera source */}
       <div className="leak leak-a" />
